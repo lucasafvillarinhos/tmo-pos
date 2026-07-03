@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pós-TMO Descomplicado - Guia de Cuidados</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #ff7675;
+            --dark: #2d3436;
+            --light: #f9f9fb;
+            --border: #e2e8f0;
+            --text-muted: #636e72;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #a29bfe);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 500px;
+        }
+
+        /* Abas Laterais */
+        .tabs {
+            width: 280px;
+            background: #f1f2f6;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 18px 20px;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover {
+            background: #e4e7eb;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .tab-btn.special-tab {
+            color: #d63031;
+        }
+
+        .tab-btn.special-tab.active {
+            color: var(--secondary);
+            border-left-color: var(--secondary);
+        }
+
+        /* Painel de Conteúdo */
+        .content-panel {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-content.special-tab-content h2 {
+            color: var(--secondary);
+        }
+
+        /* Listas e Itens */
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card-item {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tab-content.special-tab-content .card-item {
+            border-left-color: var(--secondary);
+        }
+
+        .card-item strong {
+            display: block;
+            font-size: 1.05rem;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .card-item p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Alerta Vermelho */
+        .alert-item {
+            border-left-color: #d63031 !important;
+            background: #fff5f5;
+        }
+        .alert-item strong {
+            color: #d63031;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+            .tabs {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                overflow-x: auto;
+                flex-direction: row;
+                scroll-behavior: smooth;
+            }
+            .tab-btn {
+                padding: 15px;
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            .tab-btn.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--primary);
+            }
+            .tab-btn.special-tab.active {
+                border-bottom-color: var(--secondary);
+            }
+            .content-panel {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Pós-TMO Descomplicado</h1>
+        <p>O guia interativo de cuidados para o paciente e familiares</p>
+    </header>
+
+    <div class="layout">
+        <!-- Menu de Abas -->
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'higiene')">🧼 Higiene e Isolamento</button>
+            <button class="tab-btn" onclick="openTab(event, 'alimentacao')">🍎 Alimentação Segura</button>
+            <button class="tab-btn" onclick="openTab(event, 'pessoais')">😷 Cuidados Pessoais</button>
+            <button class="tab-btn" onclick="openTab(event, 'remedios')">💊 Medicamentos</button>
+            <button class="tab-btn" onclick="openTab(event, 'alertas')">🌡️ Sinais de Alerta</button>
+            <button class="tab-btn special-tab" onclick="openTab(event, 'comprometidos')">❤️ Para os Comprometidos</button>
+        </nav>
+
+        <!-- Conteúdo das Abas -->
+        <main class="content-panel">
+            
+            <!-- ABA 1: Higiene -->
+            <div id="higiene" class="tab-content active">
+                <h2>🧼 Higiene Rigorosa e Isolamento</h2>
+                <div class="card-list">
+                    <div class="card-item">
+                        <strong>Higiene das Mãos</strong>
+                        <p>A família e as visitas permitidas devem lavar as mãos constantemente com água e sabão, além de usar álcool em gel antes de qualquer contato.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Limpeza do Ambiente</strong>
+                        <p>A casa deve ser mantida extremamente limpa e arejada. Evite vassouras que levantem poeira; prefira sempre panos úmidos.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Restrição de Visitas</strong>
+                        <p>Totalmente proibido o contato com pessoas gripadas, resfriadas ou com qualquer suspeita de infecção nas primeiras semanas críticas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 2: Alimentação -->
+            <div id="alimentacao" class="tab-content">
+                <h2>🍎 Alimentação Segura (Dieta Neutropênica)</h2>
+                <div class="card-list">
+                    <div class="card-item">
+                        <strong>Alimentos Proibidos</strong>
+                        <p>Nada de alimentos crus fora de casa, carnes malpassadas, ovos com gema mole ou queijos artesanais.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Preparação e Higiene</strong>
+                        <p>Tudo deve ser muito bem cozido ou grelhado. Frutas permitidas apenas as que possuem casca grossa e que sejam descascadas na hora (ex: banana, melancia).</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Água Filtrada e Fervida</strong>
+                        <p>Consuma apenas água mineral de fontes confiáveis ou água filtrada e devidamente fervida.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 3: Cuidados Pessoais -->
+            <div id="pessoais" class="tab-content">
+                <h2>😷 Cuidados Pessoais do Paciente</h2>
+                <div class="card-list">
+                    <div class="card-item">
+                        <strong>Uso de Máscaras</strong>
+                        <p>Uso obrigatório de máscaras de proteção facial (estilo N95/PFF2) sempre que precisar sair de casa para exames ou consultas.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Higiene Oral Delicada</strong>
+                        <p>Escovação dos dentes com escovas ultra macias para evitar sangramentos na gengiva, acompanhada de enxaguante sem álcool.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Proteção da Pele</strong>
+                        <p>Manter a pele muito bem hidratada com loções neutras e sem perfume para evitar rachaduras que servem de porta de entrada para germes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 4: Medicamentos -->
+            <div id="remedios" class="tab-content">
+                <h2>💊 Organização dos Medicamentos</h2>
+                <div class="card-list">
+                    <div class="card-item">
+                        <strong>Rigores com o Horário</strong>
+                        <p>Os imunossupressores e remédios de suporte devem ser tomados rigorosamente nas horas exatas estipuladas pelos médicos.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Tabela de Controle</strong>
+                        <p>Crie uma tabela visual ou utilize organizadores de comprimidos diários para que a família monitore as doses sem riscos de esquecimento.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 5: Alertas -->
+            <div id="alertas" class="tab-content">
+                <h2>🌡️ Sinais de Alerta (Vá ao Hospital!)</h2>
+                <div class="card-list">
+                    <div class="card-item alert-item">
+                        <strong>Febre</strong>
+                        <p>Qualquer temperatura corporal medida a partir de 37,8°C exige ida imediata à emergência do hospital.</p>
+                    </div>
+                    <div class="card-item alert-item">
+                        <strong>Sintomas Infecciosos</strong>
+                        <p>Calafrios, tosses persistentes, falta de ar, diarreia forte ou vermelhidão repentina na pele.</p>
+                    </div>
+                    <div class="card-item alert-item">
+                        <strong>Sangramentos</strong>
+                        <p>Presença visível de sangue na urina, fezes, sangramentos nasais ou gengivais que não param.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 6: COMPROMETIDOS -->
+            <div id="comprometidos" class="tab-content special-tab-content">
+                <h2>❤️ Cuidados Especiais para os Comprometidos</h2>
+                <div class="card-list">
+                    <div class="card-item">
+                        <strong>Afastamento Físico Temporário</strong>
+                        <p>Devido à baixa extrema das plaquetas e glóbulos brancos, as relações íntimas e beijos na boca ficam totalmente suspensos nos primeiros meses (fase de neutropenia).</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Barreira de Proteção, Não de Afeto</strong>
+                        <p>Entendam as restrições (como o uso de máscaras e distanciamento) como um escudo biológico temporário e necessário, nunca como falta de amor.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>O Duplo Papel do Cônjuge</strong>
+                        <p>O parceiro acumula o papel de amor e cuidador. Dividir as tarefas pesadas com outros familiares ajuda a não sobrecarregar quem está cuidando diretamente de você.</p>
+                    </div>
+                    <div class="card-item">
+                        <strong>Redefinindo a Intimidade</strong>
+                        <p>Aproveitem o isolamento protetor para focar na conexão emocional: conversem, assistam a filmes juntos no quarto e planejem todos os planos e sonhos para quando essa fase passar.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabId) {
+        // Esconde todos os conteúdos
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.remove('active'));
+
+        // Remove a classe active de todos os botões
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(button => button.classList.remove('active'));
+
+        // Mostra o conteúdo atual e adiciona classe active ao botão clicado
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
